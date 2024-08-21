@@ -3,6 +3,9 @@ import NewsItem from "./NewsItem";
 import Spinner from './Spinner'
 
 export class News extends Component {
+
+  apikey=process.env.REACT_APP_NEWS_API
+  
   capitalizeFirstLetter=(string)=> {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -18,7 +21,7 @@ export class News extends Component {
   }
   async updatePage(){
     // const url=`https://saurav.tech/NewsAPI/top-headlines/category/${this.props.category}/${this.props.country}.json`
-    const url = `https://gnews.io/api/v4/top-headlines?category=${this.props.category}&lang=en&country=${this.props.country}&${this.props.page}&max=10&apikey=2cfe79fb6b164bf0a536b729da49bfc7&`
+    const url = `https://gnews.io/api/v4/top-headlines?category=${this.props.category}&lang=en&country=${this.props.country}&${this.props.page}&max=10&apikey=${this.props.apikey}`
     this.setState({loading:true})
     let data=await fetch(url)
     let parseddata=await data.json();
