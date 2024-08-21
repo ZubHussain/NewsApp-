@@ -4,8 +4,6 @@ import Spinner from './Spinner'
 
 export class News extends Component {
 
-  apikey=process.env.REACT_APP_NEWS_API
-  
   capitalizeFirstLetter=(string)=> {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -20,12 +18,17 @@ export class News extends Component {
     document.title=this.capitalizeFirstLetter(this.props.category);
   }
   async updatePage(){
+    this.props.setProgress(10)
     // const url=`https://saurav.tech/NewsAPI/top-headlines/category/${this.props.category}/${this.props.country}.json`
     const url = `https://gnews.io/api/v4/top-headlines?category=${this.props.category}&lang=en&country=${this.props.country}&${this.props.page}&max=10&apikey=${this.props.apikey}`
+    this.props.setProgress(30)
     this.setState({loading:true})
+    this.props.setProgress(50)
     let data=await fetch(url)
     let parseddata=await data.json();
+    this.props.setProgress(70)
     this.setState({articles: parseddata.articles,loading:false,totalresults:parseddata.totalresults})
+    this.props.setProgress(100)
   }
 
   async componentDidMount(){
